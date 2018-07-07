@@ -1,0 +1,14 @@
+.skin-black .content-wrapper{
+  background-color: white;
+}
+
+.skin-black .main-header {
+  background-color: white;
+  text-align: left;
+}        
+
+.main-header .navbar{
+  min-height: 1px;
+  background-color: white;
+  text-align: left;
+}
