@@ -7,6 +7,7 @@ library(leaflet)
 library(leaflet.minicharts) #makes pie charts and other little things
 library(shinydashboard)
 library(shinycssloaders)
+library(shinyWidgets)
 
 
 
@@ -45,22 +46,20 @@ body<-dashboardBody(
     ),
     #-------- TIMELINE --------
     tabItem("Timeline",
-            plotOutput("timeline1",height="500px")),
+            plotOutput("timeline2",height="500px")),
     #-------- DATA TABLE--------
     tabItem("DataTable",
             dataTableOutput("epiDataTab",width="90%")),
     #-------- ALL TOGETHER  --------
     # BONUS! We can re-use a lot of the code we already came up with
     tabItem("Everything",
-            p("EVERYTHINGs"),
-    
-            fluidRow(
+          fluidRow(
               column(6,
                      leafletOutput("map_allTogether")),
               column(6,
                      plotOutput("phyloTree_allTogether"))
             ),
-            plotOutput("timeline1_allTogether")
+            plotOutput("timeline2_allTogether")
       )
   )
 )
@@ -76,13 +75,6 @@ sidebar<-dashboardSidebar(
   ),
   
   h3("Overlaying Metadata"),
-  # selectizeInput(inputId = "mapGlyph",
-  #                label = "Overlay the following metadata",
-  #                choices =  c("Country_isolated",
-  #                             "Phylogroup",
-  #                             "Source_Host"
-  #                )
-  # )
   uiOutput("metadataColorOpts")
 )
 
