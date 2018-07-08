@@ -61,29 +61,35 @@ body<-dashboardBody(
             column(8,
             p("Zoom in by brushing (dragging mouse to form a square) and then double clicking. Double click again to reset the view"),
             br(),
-            p("A TREE WILL GO HERE")
+              withSpinner(plotOutput("phyloTree",
+                                     height = "750px",
+                                     dblclick = "phyloTree_dblclick",
+                                     brush = brushOpts(
+                                       id = "phyloTree_brush",
+                                       resetOnNew = TRUE
+                                     )))
             )
     ),
     #-------- GEOGRAPHIC MAP --------
     tabItem("Map",
-            p("A MAPP WITH GO HERE")
+            leafletOutput("map")
     ),
     #-------- TIMELINE --------
     tabItem("Timeline",
-            p("A TIMELINE WILL GO HERE")),
+            plotOutput("timeline2",height="500px")),
     #-------- DATA TABLE--------
     tabItem("DataTable",
-           p("A TABLE WILL GO HERE")),
+            dataTableOutput("epiDataTab",width="90%")),
     #-------- ALL TOGETHER  --------
     # BONUS! We can re-use a lot of the code we already came up with
     tabItem("Everything",
           fluidRow(
               column(6,
-                     p("A MAP WILL GO HERE")),
+                     leafletOutput("map_allTogether")),
               column(6,
-                     p("A TREE WILL GO HERE"))
+                     plotOutput("phyloTree_allTogether"))
             ),
-            p("A TIMELINE WILL GO HERE")
+            plotOutput("timeline2_allTogether")
       )
   )
 )

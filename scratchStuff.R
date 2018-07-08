@@ -39,5 +39,34 @@ ggplot(metadata, aes(x = Year_isolated)) +
 
 tree<-treeio::read.tree(file="data/kleb-pneumo-meta-tree.nwk") #reads a newick tree
 tree<-ggtree::ggtree(tree)
-tree%<+%metadata + geom_tippoint(aes(color=Phylogroup),alpha=0.25)
+
+tree<-tree%<+%metadata + geom_tippoint(aes(color=Phylogroup),alpha=0.25)
+
+pList<-c()
+pList[['tree']]<-tree
+
+
+for(var in c("Phylogroup","Country_isolated")){
+  
+  tmp<-filter(tree$data,isTip == TRUE)
+  
+  pList[[var]]<-ggplot(tmp,aes_string(x = var, y = "y")) + 
+    geom_point()+
+    scale_x_discrete(na.translate=FALSE)+
+    scale_y_continuous(breaks = sort(tree$data$y),
+                     labels = levels(tree$data$id))+
+    theme_bw()+
+    theme(axis.text.y = element_blank(),
+          axis.title.y = element_blank(),
+          axis.ticks.y = element_blank(),
+          plot.margin = unit(c(0,0,0,0),"points"),
+          panel.grid.minor = element_blank(),
+          panel.grid.major.y = element_blank(),
+          axis.text.x = element_text(angle=90))
+  
+}
+
+
+cowplot::plot_grid(pList$tree,pList$Phylogroup,nrow=1, "h")
+
 
